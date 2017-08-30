@@ -1,0 +1,21 @@
+---
+- name: Instalar pacotes requeridos
+  apt: name={{ item }} state=present
+  with_items:
+    - openssl
+    - ntp
+
+- name: Baixar pacote
+  get_url:
+    url: https://apt.puppetlabs.com/puppetlabs-release-pc1-{{ ansible_distribution_release }}.deb
+    dest: /tmp/puppetlabs-release-pc1-{{ ansible_distribution_release }}.deb
+
+- name: Instalar pacote baixado
+  command: dpkg -i /tmp/puppetlabs-release-pc1-{{ ansible_distribution_release }}.deb
+
+- name: Instalar pacotes do puppet
+  apt: name={{ item }} state=present
+  with_items:
+    - puppet-lint
+    - puppet
+    - puppet-common

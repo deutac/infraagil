@@ -1,0 +1,11 @@
+---
+- name: Meu primeiro playbook
+  hosts: all
+  tasks:
+    - name: Atualizar o resolv.conf
+      copy: src=resolv.conf dest=/etc/resolv.conf
+
+    - name: Garantir que o arquivo náo seja alterado
+      command: chattr -i /etc/resolv.conf
+
+    

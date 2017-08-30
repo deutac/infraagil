@@ -1,0 +1,9 @@
+---
+# Playbook com variaveis
+- name: Criacao de usuarios nos servidores
+  hosts: docker
+  vars:
+    - username: sysadmin
+  tasks:
+    - name: Criando usuario no servidor
+      user: name={{ username }} shell=/bin/bash createhome=yes

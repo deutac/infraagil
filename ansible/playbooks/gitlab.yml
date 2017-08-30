@@ -1,0 +1,5 @@
+---
+- name: Instalacao do docker
+  hosts: devops
+  roles:
+    - gitlab

@@ -1,0 +1,13 @@
+---
+- name: Prepare puppet
+  hosts: devops
+  tasks:
+    - name: Atualizar modulo no Puppet Master
+      git:
+        repo: "{{ repo }}"
+        dest: //etc/puppet/modules/{{ modulename }}
+        key_file: //etc/keys/key.pem
+
+    - name: Limpar certificado do Puppet Master
+      command: puppet cert clean {{ modulename }}.dexter.com.br
+      ignore_errors: yes

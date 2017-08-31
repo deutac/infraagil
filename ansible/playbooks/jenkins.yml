@@ -1,0 +1,5 @@
+---
+- name: Instalação do Jenkinks
+  hosts: automation
+  roles:
+    - jenkins

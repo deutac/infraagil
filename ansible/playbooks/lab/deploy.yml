@@ -1,0 +1,26 @@
+---
+- name: Deploy docker
+  hosts: docker
+  tasks:
+    - name: verificar a existencia do container
+      command: docker inspect puppet-web
+      register: container
+      ignore_errors: yes
+
+    - name: remover o container caso ela exista
+      command: docker rm -f puppet-web
+      when: container.rc == 0
+
+    - name: realizar a criação do container do docker
+      command: docker run -dit --name puppet-web --hostname puppet-web -p 80:80 --add-host=devops.dexter.com.br:192.168.200.100 deploy /bin/bash
+
+    - name: habilitar o agent do puppet
+      command: docker exec puppet-web puppet agent --enable
+      ignore_errors: yes
+
+    - name: executar o puppet
+      command: docker exec puppet-web puppet agent -t --server=devops.dexter.com.br
+      ignore_errors: yes
+
+    - name: testar se a configuração foi aplicada com sucesso
+      command: docker exec puppet-web rpm -qa httpd

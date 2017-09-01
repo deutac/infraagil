@@ -1,0 +1,8 @@
+---
+- name: Instala Servidor Web na AWS
+  hosts: amazon
+  tasks:
+    - name: Garantir a instalacao dos pacotes
+      apt: name=nginx state=present
+      become: true
+      become_user: root
